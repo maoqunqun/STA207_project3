@@ -139,26 +139,32 @@ fixef(fixed)#show state-fixed effects term
 
 ### Assumption satisfaction
 
-检测是否constant varience
+*Homoskedasticity
 
-Ho：constant varience
+Since the inequality of variance is possible to overshadow the effect caused by different group means, we need to check the equality of variance among different observations. The residual scatter plot shows that most of the residuals uniformly gather around zero, which illustrates the equal variance assumption in the model assumptions is not violated. 
 
 ```{r, echo=FALSE}
 #constant varience
-bptest(fixed)
+#bptest(fixed)
+plot(as.vector(residuals(fixed)),type="p")
 #in this section, residuals plot could also be added for better proving the constancy
 ```
+*Normality
 
-检测是否normal
-
-结果确实基本是normality
+We examine the distribution of the residuals to check the Normality of the error term. From the histogram and the Q-Q plot, we find that the distribution of residuals is an approximately normal distribution. So the normal distribution assumptions in the model assumption is not violated.
 
 ```{r, echo=FALSE}
 #test normal
+hist(residuals(fixed), xlab = 'Residuals')
 res<-scale(residuals(fixed))
 qqnorm(res, ylab = 'Residuals')
 qqline(res)
 ```
+*Independence
+
+The errors term in fixed-effects models which differ from the errors in multiple regression as the regression error can exhibit serial correlation in panel models. According to reference(Introduction to Econometrics for Chapter 10.5), the fix-effect model assumption does not require the observations to be uncorrelated within an entity. The $X_{i,t}$ are allowed to be autocorrelated within entities. Considering that our observations, the states, are independent with each other, the assumption is justified.
+
+
 ### Confidence level
 
 # 3.Discussion
